@@ -546,7 +546,7 @@ body{
 				background: #FFF7F7;
 				border:1px solid #BFBFC0;
 			}
-			.fullscreen__form input[type=tel]._error{
+			input[type=tel]._error{
 				background: #FFF7F7;
 				border:1px solid red;
 				box-shadow: 0 0 15px red;

@@ -11,7 +11,9 @@
 	$mail->IsHTML(true);
 
 	//От кого письмо
-	$mail->setFrom('domen.ru', 'Клиент');
+	if (trim(!empty($_POST['name'])) && trim(!empty($_POST['email']))){
+		$mail->setFrom($_POST['email'], $_POST['name']);
+	}
 	//Кому отправить
 	$mail->addAddress('gluk-90@list.ru');
 	//Тема письма
@@ -35,10 +37,14 @@
 	
 
 	//Отправляем
-	if (!$mail->send()) {
-		$message = 'Ошибка';
-	} else {
-		$message = 'Данные отправлены!';
+	try {
+		if (!$mail->send()) {
+			$message = 'Ошибка';
+		} else {
+			$message = 'Данные отправлены!';
+		}
+	} catch (\Exception $e) {
+		$message = $e->getMessage();
 	}
 
 	$response = ['message' => $message];

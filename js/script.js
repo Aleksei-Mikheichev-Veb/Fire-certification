@@ -224,57 +224,59 @@ if (animItems.length > 0) {
 // Отправка форм
 
 document.addEventListener('DOMContentLoaded', function () {
-	const forms = document.querySelectorAll('.forms');
-	for( let form of forms){
-		form.addEventListener('submit', formSend);
+  document.querySelectorAll('.forms')
+    .forEach(form => form
+      .addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-		async function formSend(e) {
-			e.preventDefault();
+        form = e.target;
 
-			let error = formValidate(form);
+        const error = formValidate(form);
+        if (error !== 0) {
+          alert('Заполните обязательные поля');
+          return;
+        }
 
-			let formData = new FormData(form);
+        form.classList.add('_sending');
+        const response = await fetch('sendmail.php', {
+          method: 'POST',
+          body: new FormData(form),
+        });
 
-			if (error === 0) {
-				form.classList.add('_sending');
-				let response = await fetch('sendmail.php', {
-					method: 'POST',
-					body: formData
-				});
-				if (response.ok) {
-					let result = await response.json();
-					alert(result.message);
-					formPreview.innerHTML = '';
-					form.reset();
-					form.classList.remove('_sending');
-				} else {
-					alert("Ошибка");
-					form.classList.remove('_sending');
-				}
-				}else {
-					alert('Заполните обязательные поля');
-				}
-			}
-			function formValidate(form) {
-				let error = 0;
-				let input = document.querySelector('._req');
-				formRemoveError(input);
+        if (!response.ok) {
+          alert("Ошибка");
+          form.classList.remove('_sending');
+          return;
+        }
 
-				if (input.value === '') {
-						formAddError(input);
-						error++;
-				}
-				console.log(error);
-				return error;
-			}
-			function formAddError(input) {
-				input.parentElement.classList.add('_error');
-				input.classList.add('_error');
-			}
-			function formRemoveError(input) {
-				input.parentElement.classList.remove('_error');
-				input.classList.remove('_error');
-			}
-		}
-	
+        const result = await response.json();
+        alert(result.message);
+        form.reset();
+        form.classList.remove('_sending');
+      })
+    )
 });
+
+function formValidate(form) {
+  let error = 0;
+  console.info('form = ', form);
+  let input = form.querySelector('._req');
+  formRemoveError(input);
+
+  if (input.value === '') {
+    formAddError(input);
+    error++;
+  }
+  console.log(error);
+  return error;
+}
+
+function formAddError(input) {
+  input.parentElement.classList.add('_error');
+  input.classList.add('_error');
+}
+
+function formRemoveError(input) {
+  input.parentElement.classList.remove('_error');
+  input.classList.remove('_error');
+}
