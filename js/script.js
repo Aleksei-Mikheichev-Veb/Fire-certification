@@ -257,16 +257,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 			function formValidate(form) {
 				let error = 0;
-				let formReq = document.querySelector('._req');
+				let input = document.querySelector('._req');
+				formRemoveError(input);
 
-				for (let index = 0; index < formReq.length; index++) {
-					const input = formReq[index];
-					formRemoveError(input);
-
-					if (input.value === '') {
-							formAddError(input);
-							error++;
-						}
+				if (input.value === '') {
+						formAddError(input);
+						error++;
 				}
 				console.log(error);
 				return error;
