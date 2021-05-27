@@ -21,14 +21,14 @@
 	//Тело письма
 	$body = '<h1>Здравствуйте, унжна консультация</h1>';
 	
-	if(trim(!empty($_POST['name']))){
+	if(trim(!empty($_GET['name']))){
 		$body.='<p><strong>Имя:</strong> '.$_POST['name'].'</p>';
 	}
-	if(trim(!empty($_POST['email']))){
+	if(trim(!empty($_GET['email']))){
 		$body.='<p><strong>E-mail:</strong> '.$_POST['email'].'</p>';
 	}
 	
-	if(trim(!empty($_POST['message']))){
+	if(trim(!empty($_GET['message']))){
 		$body.='<p><strong>Сообщение:</strong> '.$_POST['message'].'</p>';
 	}
 	
