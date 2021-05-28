@@ -13,6 +13,8 @@
 	//От кого письмо
 	if (trim(!empty($_POST['name'])) && trim(!empty($_POST['email']))){
 		$mail->setFrom($_POST['email'], $_POST['name']);
+	} else {
+		$mail->setFrom('robot@site.com');
 	}
 	//Кому отправить
 	$mail->addAddress('gluk-90@list.ru');
@@ -34,7 +36,7 @@
 		$body.='<p><strong>Сообщение:</strong> '.$_POST['message'].'</p>';
 	}
 	
-	
+	$mail->msgHTML($body);
 
 	//Отправляем
 	try {
