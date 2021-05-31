@@ -21,13 +21,13 @@
 		$mail->setFrom('robot@site.com');
 	}
 	//Кому отправить
-	$mail->addAddress('gluk-90@list.ru');
+	$mail->addAddress('info@kb-sert.ru');
 	//Тема письма
-	$mail->Subject = 'Здравствуйте, унжна консультация"';
+	$mail->Subject = 'Здравствуйте, нужна консультация"';
 
 
 	//Тело письма
-	$body = '<h1>Здравствуйте, унжна консультация</h1>';
+	$body = '<h1>Здравствуйте, нужна консультация</h1>';
 	
 	if(trim(!empty($_POST['name']))){
 		$body.='<p><strong>Имя:</strong> '.$_POST['name'].'</p>';
